@@ -10,11 +10,11 @@ declare module 'styled-components' {
 
       white: string;
       black: string;
-      grey: string;
+      gray: string;
 
       success: string;
       info: string;
-      warnong: string;
+      warning: string;
     }
   }
 }
