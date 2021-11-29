@@ -31,9 +31,8 @@ export const MenuContent = styled.nav`
   gap: 7px 0;
 `;
 
-export const MenuItemLink = styled.a`
+export const MenuItemLink = styled.span`
   color: ${props => props.theme.colors.info};
-  text-decoration: none;
 
   display: flex;
   align-items: center;

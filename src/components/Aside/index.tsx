@@ -8,6 +8,7 @@ import {
 import { Container, Header, LogoImg, Title, MenuContent, MenuItemLink } from './styles';
 
 import logoImg from '../../assets/logo.svg';
+import { Link } from 'react-router-dom';
 
 const Aside: React.FC = () => {
   return (
@@ -18,26 +19,33 @@ const Aside: React.FC = () => {
       </Header>
       <MenuContent>
 
-        <MenuItemLink href="#">
-          <MdDashboard />
-          Dashboard
-        </MenuItemLink>
+        <Link to="/dashboard" style={{ textDecoration: 'none' }}>
+          <MenuItemLink>
+            <MdDashboard />
+            Dashboard
+          </MenuItemLink>
+        </Link>
 
-        <MenuItemLink href="#">
-          <MdArrowUpward />
-          Entradas
-        </MenuItemLink>
+        <Link to="/list/entry-balance" style={{ textDecoration: 'none' }}>
+          <MenuItemLink>
+            <MdArrowUpward />
+            Entradas
+          </MenuItemLink>
+        </Link>
 
-        <MenuItemLink href="#">
-          <MdArrowDownward />
-          Saídas
-        </MenuItemLink>
+        <Link to="/list/exit-balance" style={{ textDecoration: 'none' }}>
+          <MenuItemLink>
+            <MdArrowDownward />
+            Saídas
+          </MenuItemLink>
+        </Link>
 
-        <MenuItemLink href="#">
-          <MdExitToApp />
-          Sair
-        </MenuItemLink>
-
+        <Link to="/exit" style={{ textDecoration: 'none' }}>
+          <MenuItemLink>
+            <MdExitToApp />
+            Sair
+          </MenuItemLink>
+        </Link>
       </MenuContent>
     </Container>
   )
