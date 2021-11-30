@@ -25,6 +25,8 @@ const List: React.FC = () => {
   const [data, setData] = useState<IData[]>([]);
   const [monthSelected, setMonthSelected] = useState<string>(format(new Date(), 'M'));
   const [yearSelected, setYearSelected] = useState<string>(format(new Date(), 'yyyy'));
+  const [selectedFrequency, setSelectedFrequency] = useState(['recorrente', 'eventual']);
+
 
   const listData = useMemo(() => {
     return type === 'entry-balance' ? gains : expenses;
@@ -44,7 +46,7 @@ const List: React.FC = () => {
         label: month
       }
     })
-  }, [])
+  }, []);
 
 
   const years = useMemo(() => {
@@ -64,7 +66,20 @@ const List: React.FC = () => {
       }
     })
 
-  }, [listData])
+  }, [listData]);
+
+  const handleFrequencyClick = (frequency: string) => {
+    const alReadySelected = selectedFrequency.findIndex(item => item === frequency);
+
+
+    if (alReadySelected >= 0) {
+      const filtered = selectedFrequency.filter(item => item !== frequency);
+      setSelectedFrequency(filtered);
+    }
+    else {
+      setSelectedFrequency((prev) => [...prev, frequency]);
+    }
+  }
 
   useEffect(() => {
 
@@ -73,23 +88,20 @@ const List: React.FC = () => {
       const month = format(date, 'M');
       const year = format(date, 'yyyy');
 
-      return month === monthSelected && year === yearSelected;
+      return month === monthSelected && year === yearSelected && selectedFrequency.includes(item.frequency);
     });
 
     const formattedData = filteredDate.map(item => {
-      console.log(item.description)
       return {
         description: item.description,
         amountFormated: formatCurrency(Number(item.amount)),
         frequency: item.frequency,
         dateFormated: formatDate(item.date),
-        tagColor: item.frequency !== 'recorrente' ? '#4E41f0' : '#E44C4E',
+        tagColor: item.frequency === 'recorrente' ? '#4E41f0' : '#E44C4E',
       }
     })
     setData(formattedData);
-    console.log(monthSelected);
-    console.log(yearSelected);
-  }, [listData, monthSelected, yearSelected]);
+  }, [listData, monthSelected, selectedFrequency, yearSelected]);
 
   return (
     <Container>
@@ -99,8 +111,21 @@ const List: React.FC = () => {
       </ContentHeader>
 
       <Filters>
-        <button type="button" className="tag-filter tag-filter-recurrent" >Recorrentes</button>
-        <button type="button" className="tag-filter tag-filter-eventual" >Eventuais</button>
+
+        <button type="button"
+          className={`tag-filter tag-filter-recurrent ${selectedFrequency.includes('recorrente') && 'tag-actived'}`}
+          onClick={() => handleFrequencyClick('recorrente')}
+        >
+          Recorrentes
+        </button>
+
+        <button type="button"
+          className={`tag-filter tag-filter-eventual ${selectedFrequency.includes('eventual') && 'tag-actived'}`}
+          onClick={() => handleFrequencyClick('eventual')}
+        >
+          Eventuais
+        </button>
+
       </Filters>
 
       <Content>

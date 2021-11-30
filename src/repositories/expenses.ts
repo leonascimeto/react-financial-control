@@ -51,6 +51,6 @@ export default [
   { "description": "Pizza", "amount": "60.00", "type": "saída", "frequency": "eventual", "date": "2021-11-19" },
   { "description": "NBA League Pass", "amount": "60.00", "type": "saída", "frequency": "eventual", "date": "2021-11-19" },
   { "description": "Aula de Dança", "amount": "60.00", "type": "saída", "frequency": "eventual", "date": "2021-11-19" },
-  { "description": "Aula de violão", "amount": "60.00", "type": "saída", "frequency": "eventual", "date": "2021-11-19" },
-  { "description": "Xbos Utimate Game Pass", "amount": "60.00", "type": "saída", "frequency": "eventual", "date": "2021-11-19" },
+  { "description": "Aula de violão", "amount": "60.00", "type": "saída", "frequency": "recorrente", "date": "2021-11-19" },
+  { "description": "Xbos Utimate Game Pass", "amount": "60.00", "type": "saída", "frequency": "recorrente", "date": "2021-11-19" },
 ]
