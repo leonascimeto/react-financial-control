@@ -36,7 +36,7 @@ const List: React.FC = () => {
     if (type === 'entry-balance') {
       return {
         title: 'Entradas',
-        lineColor: '#F7931B',
+        lineColor: '#4E41F0',
         listData: gains
       }
     } else {
