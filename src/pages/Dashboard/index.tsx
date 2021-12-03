@@ -6,18 +6,19 @@ import listOfMonths from '../../utils/months';
 //componentes
 import ContentHeader from '../../components/ContentHeader';
 import SelectInput from '../../components/SelectInput';
+import WalletBox from '../../components/WalletBox';
+import MessageBox from '../../components/MessageBox';
+import PieChart from '../../components/PieChartBox';
 
 //imagens
 import happyImg from '../../assets/happy.svg';
 import sadImg from '../../assets/sad.svg';
 import grinningImg from '../../assets/grinning.svg';
 
-
 //dados estáticos
 import expenses from '../../repositories/expenses';
 import gains from '../../repositories/gains';
-import WalletBox from '../../components/WalletBox';
-import MessageBox from '../../components/MessageBox';
+import HistoryBox from '../../components/HistoryBox';
 
 const DashBoard: React.FC = () => {
   const [monthSelected, setMonthSelected] = useState<string>(format(new Date(), 'M'));
@@ -124,7 +125,80 @@ const DashBoard: React.FC = () => {
         icon: happyImg
       }
     }
-  }, [totalBalance])
+  }, [totalBalance]);
+
+  const relationExpensesVersusGains = useMemo(() => {
+    const total = totalGains + totalExpenses;
+
+    const percentGains = (totalGains / total) * 100;
+    const percentExpenses = (totalExpenses / total) * 100;
+
+    const data = [
+      {
+        name: "Entradas",
+        value: totalExpenses,
+        percent: +percentGains.toFixed(1),
+        color: '#4E41F0'
+      },
+      {
+        name: "Saídas",
+        value: totalExpenses,
+        percent: +percentExpenses.toFixed(1),
+        color: '#E44C4E'
+      }
+    ];
+
+    return data;
+
+  }, [totalExpenses, totalGains]);
+
+  const historyData = useMemo(() => {
+    return listOfMonths.map((_, month) => {
+      let amountEntry = 0;
+      gains.forEach(gain => {
+        const date = new Date(gain.date);
+        const gainMonth = date.getMonth();
+        const gainYear = format(date, 'yyyy');
+
+        if (gainMonth === month && gainYear === yearSelected) {
+          try {
+            amountEntry += +gain.amount;
+          } catch {
+            throw new Error('amountEntry is invalid. amountEntry must be a valid number')
+          }
+        }
+      });
+
+      let amountOutput = 0;
+      expenses.forEach(expense => {
+        const date = new Date(expense.date);
+        const expenseMonth = date.getMonth();
+        const expenseYear = format(date, 'yyyy');
+
+        if (expenseMonth === month && expenseYear === yearSelected) {
+          try {
+            amountOutput += +expense.amount;
+          } catch {
+            throw new Error('amountOutput is invalid. amountOutput must be a valid number')
+          }
+        }
+      });
+      return {
+        monthNumber: month,
+        month: listOfMonths[month].substr(0, 3),
+        amountEntry,
+        amountOutput
+      }
+    })
+      .filter(item => {
+        //filtrar para não mostrar dados dos meses que faltam no ano corrente
+        const date = new Date();
+        const currentMonth = date.getMonth();
+        const currentYear = format(date, 'yyyy');
+
+        return (yearSelected === currentYear && item.monthNumber <= currentMonth) || (yearSelected < currentYear);
+      });
+  }, [yearSelected])
 
   return (
     <Container>
@@ -172,6 +246,17 @@ const DashBoard: React.FC = () => {
           description={message.description}
           footerText={message.footerText}
           icon={message.icon}
+        />
+
+        <PieChart data={relationExpensesVersusGains} />
+
+        {
+          console.log('history data: ', historyData)
+        }
+        <HistoryBox
+          data={historyData}
+          lineColorAmountEntry="#4E41F0"
+          lineColorAmountOutput="#E44C4E"
         />
 
       </Content>
