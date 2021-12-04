@@ -1,16 +1,20 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
+import { useAuth } from '../../hooks/auth';
+
 import {
   MdDashboard,
   MdArrowDownward,
   MdArrowUpward,
   MdExitToApp
 } from 'react-icons/md';
-import { Container, Header, LogoImg, Title, MenuContent, MenuItemLink } from './styles';
+import { Container, Header, LogoImg, Title, MenuContent, MenuItemLink, MenuItemButton } from './styles';
 
 import logoImg from '../../assets/logo.svg';
-import { Link } from 'react-router-dom';
 
 const Aside: React.FC = () => {
+  const { signOut } = useAuth();
   return (
     <Container>
       <Header>
@@ -19,7 +23,7 @@ const Aside: React.FC = () => {
       </Header>
       <MenuContent>
 
-        <Link to="/dashboard" style={{ textDecoration: 'none' }}>
+        <Link to="/" style={{ textDecoration: 'none' }}>
           <MenuItemLink>
             <MdDashboard />
             Dashboard
@@ -40,12 +44,10 @@ const Aside: React.FC = () => {
           </MenuItemLink>
         </Link>
 
-        <Link to="/exit" style={{ textDecoration: 'none' }}>
-          <MenuItemLink>
-            <MdExitToApp />
-            Sair
-          </MenuItemLink>
-        </Link>
+        <MenuItemButton onClick={signOut} >
+          <MdExitToApp />
+          Sair
+        </MenuItemButton>
       </MenuContent>
     </Container>
   )

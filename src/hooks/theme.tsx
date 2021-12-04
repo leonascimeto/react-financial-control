@@ -25,7 +25,6 @@ interface IThemeContext {
 
 const ThemeContext = createContext<IThemeContext>({} as IThemeContext);
 
-
 const ThemeProvider: React.FC = ({ children }) => {
   const [theme, setTheme] = useState<ITheme>(() => {
     const themeSaved = localStorage.getItem('@financial-control:theme');
@@ -61,5 +60,3 @@ function useTheme(): IThemeContext {
 }
 
 export { ThemeProvider, useTheme };
-
-
