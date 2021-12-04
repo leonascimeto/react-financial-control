@@ -49,6 +49,7 @@ const HistoryBox: React.FC<IHistoryBox> = ({ data, lineColorAmountEntry, lineCol
           <XAxis dataKey="month" stroke="#cecece" />
           <Tooltip
             formatter={(value: any) => formatCurrency(Number(value))}
+            label={false}
           />
           <Line
             type="monotone"
