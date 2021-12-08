@@ -1,9 +1,10 @@
 import React, { useMemo, useState } from 'react';
 import { Container, Profile, Welcome, UserName, } from './styles';
-import emojis from '../../utils/emojis';
 
 import { useTheme } from '../../hooks/theme';
 import Toggle from '../Toogle';
+
+import emojis from '../../utils/emojis';
 
 const MainHeader: React.FC = () => {
 
@@ -31,7 +32,7 @@ const MainHeader: React.FC = () => {
       />
       <Profile>
         <Welcome>Olá, {emoji}</Welcome>
-        <UserName>Leonardo Fernandes</UserName>
+        <UserName>Nome do usuário</UserName>
       </Profile>
     </Container>
   )
