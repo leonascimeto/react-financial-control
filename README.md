@@ -18,7 +18,7 @@ React-Financial-Control
 
 <div align="center">
 
-<a target="_blank" href="https://react-financial-control.netlify.app/"><img alt="netlify" src="github/netlify.svg" ></img></a>
+<a target="_blank" href="https://react-financial-control.netlify.app/"><img alt="netlify" src=".github/netlify.svg" ></img></a>
 
 </div>
 
